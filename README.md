@@ -6,7 +6,7 @@ Switch to a specific window of an app in the current Desktop Space
 
 ## Usage
 
-Search app windows in the current Desktop Space via the `win` keyword.
+Search app windows in the current Desktop Space via the `win` keyword. The window you are currently in (the frontmost one) is excluded from the list, since there's no point switching to the window you're already looking at.
 
 ![Alfred search for win](Workflow/images/about/win.png)
 

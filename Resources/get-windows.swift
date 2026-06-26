@@ -19,7 +19,7 @@ let windowList: CFArray? = CGWindowListCopyWindowInfo(
 guard let windows = windowList as? [[String: Any]] else { fatalError("Unable to get window list") }
 
 // Populate items
-let sfItems: [ScriptFilterItem] = windows.compactMap { dict in
+let allItems: [ScriptFilterItem] = windows.compactMap { dict in
   guard
     dict["kCGWindowLayer"] as? Int == 0,
     let appRawName = dict["kCGWindowOwnerName"] as? String,
@@ -51,6 +51,11 @@ let sfItems: [ScriptFilterItem] = windows.compactMap { dict in
     match: "\(windowName) \(appName)"
   )
 }
+
+// The on-screen window list is ordered front-to-back, so the first item is the
+// window the user is currently in. Drop it — there's no point listing the window
+// you're already looking at in a "switch to another window" list.
+let sfItems = Array(allItems.dropFirst())
 
 // Fallback if no valid items
 guard !sfItems.isEmpty else {
